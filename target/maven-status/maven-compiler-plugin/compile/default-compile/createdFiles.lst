@@ -1,0 +1,5 @@
+App\App.class
+IO\FolderCopier.class
+Arguments\ArgValidator.class
+IO\CopyThread.class
+IO\FolderMapper.class
