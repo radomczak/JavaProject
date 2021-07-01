@@ -4,41 +4,41 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 /**
- * Klasa mapuj¹ca strukturê kopiowanego katalogu
- * @author Rados³aw Popielarski
- * @author Jacek Trêbicki
+ * Klasa mapujï¿½ca strukturï¿½ kopiowanego katalogu
+ * @author Radosï¿½aw Popielarski
+ * @author Jacek Trï¿½bicki
  */
 public class FolderMapper {
-	// Deklaracja atrybutów
+	// Deklaracja atrybutï¿½w
     private Map<File,Integer> folderStructure = null;
 
     /**
-     * Funkcja odwzorowuj¹ca budowê katalogu
-     * @param directoryPath - œcie¿ka mapowanego katalogu
+     * Funkcja odwzorowujï¿½ca budowï¿½ katalogu
+     * @param directoryPath - ï¿½cieï¿½ka mapowanego katalogu
      * @throws IOException
      */
     private void mapFolder(String directoryPath) throws IOException {
-    	// Tworzenie pliku ze œcie¿ki
+    	// Tworzenie pliku ze ï¿½cieï¿½ki
         File file = new File(directoryPath);
 
         // Mapowanie budowy folderu
         folderStructure = new LinkedHashMap<>();
-        // Zagnie¿d¿enie zaczyna siê od -1, bo to poziom wskazanego w parametrze folderu do kopiowania
+        // Zagnieï¿½dï¿½enie zaczyna siï¿½ od -1, bo to poziom wskazanego w parametrze folderu do kopiowania
         mapPathOfFile(file,-1);
-        // Usuniêcie wskazanego folderu w parametrze do kopiowania
+        // Usuniï¿½cie wskazanego folderu w parametrze do kopiowania
         folderStructure.remove(file);
     }
 
     /**
-     * Funckja rekurencyjna badaj¹ca zagnie¿d¿enie we wskazanym pliku
+     * Funckja rekurencyjna badajï¿½ca zagnieï¿½dï¿½enie we wskazanym pliku
      * @param file - badany plik
-     * @param count - poziom zagnie¿d¿enia pliku w folderze
+     * @param count - poziom zagnieï¿½dï¿½enia pliku w folderze
      */
     private void mapPathOfFile(File file, int count) {
     	// Dodanie pliku i jej poziomy do listy
         folderStructure.put(file,count);
 
-        // Jeœli plik jest folderem wykonywana jest rekurencja badaj¹ca jego zagnie¿d¿enie
+        // Jeï¿½li plik jest folderem wykonywana jest rekurencja badajï¿½ca jego zagnieï¿½dï¿½enie
         if(file.isDirectory()){
             String[] filesInDirectory = file.list();
             for(String fileName: filesInDirectory){
@@ -48,20 +48,9 @@ public class FolderMapper {
     }
 
     /**
-     * Funkcja wyœwietlaj¹ca strukturê wskazanego w parametrze folderu (plik i jego poziom zagnie¿d¿enia)
-     * @throws IOException
-     */
-    public void printFolderStructue() throws IOException {
-        if(folderStructure == null) throw new IOException("Folder is not mapped yet");
-        for(File file: folderStructure.keySet()){
-            System.out.println(file.getAbsolutePath() + " - " + folderStructure.get(file));
-        }
-    }
-
-    /**
-     * Funkcja zwracaj¹ca mapê (strukturê folderu)
-     * @param directoryPath - œcie¿ka katalogu do zwrócenia
-     * @return - struktura folderu w postaci mapy przechowuj¹cej plik i poziom jego zagnie¿d¿enia
+     * Funkcja zwracajï¿½ca mapï¿½ (strukturï¿½ folderu)
+     * @param directoryPath - ï¿½cieï¿½ka katalogu do zwrï¿½cenia
+     * @return - struktura folderu w postaci mapy przechowujï¿½cej plik i poziom jego zagnieï¿½dï¿½enia
      * @throws IOException
      */
     public Map<File, Integer> getFolderStructure(String directoryPath) throws IOException {
@@ -71,7 +60,7 @@ public class FolderMapper {
     }
 
     /**
-     * Funckja sortuj¹ca pliki po poziomie zgnie¿d¿enia
+     * Funckja sortujï¿½ca pliki po poziomie zgnieï¿½dï¿½enia
      */
     private void sortFolderStructure() {
         Map<File,Integer> sortedMap = new LinkedHashMap<>();

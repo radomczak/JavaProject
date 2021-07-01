@@ -9,24 +9,26 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 /**
- * Klasa kopiuj¹ca pliki
- * @author Rados³aw Popielarski
- * @author Jacek Trêbicki
+ * Klasa kopiujï¿½ca pliki
+ * @author Radosï¿½aw Popielarski
+ * @author Jacek Trï¿½bicki
  */
 public class FolderCopier {
 
-	// Deklaracja atrybutów
+	// Deklaracja atrybutï¿½w
     public static Set<File> destinationFilesDone = new HashSet<>();
     private Map<File, Integer> folderStructure = null;
-    // Deklaracja mapy (struktury) kopiowanych plików
+    // Deklaracja mapy (struktury) kopiowanych plikï¿½w
     private FolderMapper mapper = new FolderMapper();
     private String sourcePath;
     private String destinationPath;
     private int numberOfThreads;
 
     /**
-     * Kontruktor przypisuj¹cy wartoœci do atrybutów
+     * Kontruktor przypisujï¿½cy wartoï¿½ci do atrybutï¿½w
      * @param argValidator - parametry po walidacji
      */
     public FolderCopier(ArgValidator argValidator) {
@@ -36,7 +38,7 @@ public class FolderCopier {
     }
 
     /**
-     * Funkcja kopiuj¹ca. Nie zwraca ¿adnej wartoœci
+     * Funkcja kopiujï¿½ca. Nie zwraca ï¿½adnej wartoï¿½ci
      */
     public void copyFolder() {
         try {
@@ -45,7 +47,7 @@ public class FolderCopier {
             e.printStackTrace();
         }
 
-        // Pliki wymagane do wczeœniejszego skopiowania
+        // Pliki wymagane do wczeï¿½niejszego skopiowania
         Set<File> required;
         ExecutorService es = Executors.newFixedThreadPool(numberOfThreads);
         for(File f : folderStructure.keySet()) {
@@ -54,12 +56,17 @@ public class FolderCopier {
             es.execute(new CopyThread(required,f,filePath));
         }
         es.shutdown();
+        try {
+            es.awaitTermination(1, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     * Funkcja sprawdzaj¹ca i zwracaj¹ca wymagane pliki do wczeœniejszego skopiowania
-     * @param i - poziom zagnie¿dzenia
-     * @return - HashSet przechowuj¹cy wymagane pliki do wczeœniejszego skopiowania
+     * Funkcja sprawdzajï¿½ca i zwracajï¿½ca wymagane pliki do wczeï¿½niejszego skopiowania
+     * @param i - poziom zagnieï¿½dzenia
+     * @return - HashSet przechowujï¿½cy wymagane pliki do wczeï¿½niejszego skopiowania
      */
     private Set<File> checkAndGetRequired(int i) {
         Set<File> required = new HashSet<>();
